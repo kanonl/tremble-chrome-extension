@@ -2,7 +2,7 @@ const Peep = {
     "ALARMS": {
         "Name": "peep",
         "When": Date.now() + 5000,
-        "PeriodInMinutes": 5
+        "PeriodInMinutes": 15
     },
     "NOTIFICATIONS": {
         "TYPE": {
@@ -19,14 +19,8 @@ const Peep = {
     }
 };
 
-chrome.runtime.onStartup.addListener(event => {
-    chrome.alarms.clear(Peep.ALARMS.Name, wasCleared => {
-        chrome.alarms.create(Peep.ALARMS.Name, {
-            when: Peep.ALARMS.When,
-            periodInMinutes: Peep.ALARMS.PeriodInMinutes
-        });
-    });
-});
+chrome.runtime.onInstalled.addListener(event => setAlarm(Peep.ALARMS.Name, Peep.ALARMS.When, Peep.ALARMS.PeriodInMinutes));
+chrome.runtime.onStartup.addListener(event => setAlarm(Peep.ALARMS.Name, Peep.ALARMS.When, Peep.ALARMS.PeriodInMinutes));
 
 chrome.alarms.onAlarm.addListener(alarm => {
     if (alarm.name === Peep.ALARMS.Name) {
@@ -34,9 +28,14 @@ chrome.alarms.onAlarm.addListener(alarm => {
     }
 });
 
-//chrome.browserAction.onClicked.addListener(tab => {
-//    fetchChannels();
-//});
+const setAlarm = (name, when, periodInMinutes) => {
+    chrome.alarms.clear(name, wasCleared => {
+        chrome.alarms.create(name, {
+            when: when,
+            periodInMinutes: periodInMinutes
+        });
+    });
+};
 
 const fetchChannels = () => {
 
@@ -46,20 +45,16 @@ const fetchChannels = () => {
         "client_id": Peep.TWITCH.CliendId
     });
 
-    console.log(url.toString());
-
     fetch(url.toString()).then(response => {
         if (response.ok) {
             return response.json();
         }
         throw new Error(response.statusText);
     }).then(json => {
-        console.log(json);
+        return json;
     }).catch(error => {
         showNotification(error.toString());
     });
-
-    return;
 
 };
 
