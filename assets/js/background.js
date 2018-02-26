@@ -20,6 +20,7 @@ const Peep = {
 };
 
 chrome.runtime.onInstalled.addListener(event => setAlarm(Peep.ALARMS.Name, Peep.ALARMS.When, Peep.ALARMS.PeriodInMinutes));
+
 chrome.runtime.onStartup.addListener(event => setAlarm(Peep.ALARMS.Name, Peep.ALARMS.When, Peep.ALARMS.PeriodInMinutes));
 
 chrome.alarms.onAlarm.addListener(alarm => {
@@ -45,16 +46,7 @@ const fetchChannels = () => {
         "client_id": Peep.TWITCH.CliendId
     });
 
-    fetch(url.toString()).then(response => {
-        if (response.ok) {
-            return response.json();
-        }
-        throw new Error(response.statusText);
-    }).then(json => {
-        return json;
-    }).catch(error => {
-        showNotification(error.toString());
-    });
+    return fetch(url.toString());
 
 };
 
@@ -94,3 +86,6 @@ const showNotification = message => {
 
     return;
 };
+
+window.fetchChannels = fetchChannels;
+window.showNotification = showNotification;
