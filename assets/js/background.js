@@ -46,7 +46,28 @@ const fetchChannels = () => {
         "client_id": Peep.TWITCH.CliendId
     });
 
-    return fetch(url.toString());
+    return fetch(url.toString()).then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error(response.statusText);
+    }).then(json => {
+
+        let promises = [];
+
+        json.follows.forEach(follow => {
+            url.pathname = "/kraken/streams";
+            url.search = new URLSearchParams({
+                "channel": follow.channel.name,
+                "client_id": Peep.TWITCH.CliendId
+            });
+
+            promises.push(fetch(url.toString()));
+        });
+
+        return promises;
+
+    }).catch(error => console.error(error.toString()));
 
 };
 

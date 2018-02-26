@@ -1,12 +1,18 @@
-// popup.js
+const b = chrome.extension.getBackgroundPage();
 
-const background = chrome.extension.getBackgroundPage();
+let things = b.fetchChannels();
 
-background.fetchChannels().then(response => {
-    if (response.ok) {
-        return response.json();
-    }
-    throw new Error(response.statusText);
-}).then(json => {
-    console.log(json);
-}).catch(error => background.showNotification(error.toString()));
+things.then(kanon => {
+    Promise.all(kanon).then(values => {
+        values.forEach(response => {
+            if (response.ok) {
+                response.json().then(json => {
+                    if (json.streams.length > 0) {
+                        console.log(json.streams[0].channel.name);
+                        document.querySelector(".peep").innerHTML += json.streams[0].channel.name + "<br>";
+                    }
+                });
+            }
+        });
+    });
+});
