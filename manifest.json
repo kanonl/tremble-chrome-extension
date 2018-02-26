@@ -1,0 +1,32 @@
+{
+    "manifest_version": 2,
+    "name": "Peep",
+    "version": "0.0.100",
+    "description": "Kibo is a leading omnichannel commerce platform for retailers and branded manufacturers.",
+    "icons": {
+        "16": "assets/images/Glitch_Purple_RGB.svg",
+        "32": "assets/images/Glitch_Purple_RGB.svg",
+        "48": "assets/images/Glitch_Purple_RGB.svg",
+        "96": "assets/images/Glitch_Purple_RGB.svg",
+        "128": "assets/images/Glitch_Purple_RGB.svg"
+    },
+    "author": "Kanon Lo",
+    "browser_action": {
+        "default_icon": {
+            "16": "assets/images/Glitch_Purple_RGB.svg",
+            "24": "assets/images/Glitch_Purple_RGB.svg",
+            "32": "assets/images/Glitch_Purple_RGB.svg"
+        },
+        "default_title": "Peep",
+        "default_popup": "assets/views/popup.html"
+    },
+    "background": {
+        "scripts": ["assets/js/background.js"],
+        "persistent": false
+    },
+    "permissions": [
+        "alarms",
+        "notifications",
+        "https://api.twitch.tv/"
+    ]
+}
