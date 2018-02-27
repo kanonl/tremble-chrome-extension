@@ -9,7 +9,8 @@
         "NOTIFICATIONS": {
             "TYPE": {
                 "List": "list",
-                "Basic": "basic"
+                "Basic": "basic",
+                "Image": "image"
             },
             "Title": "Peep",
             "RequireInteraction": true
@@ -69,7 +70,18 @@
                     throw new Error(response.statusText);
                 }).then(json => {
                     if (json.streams.length > 0) {
-                        showNotification(json.streams[0].name);
+                        console.log(json);
+
+                        let stream_type = json.streams[0].stream_type;
+                        let title = `${json.streams[0].channel.display_name}`;
+                        let message = json.streams[0].channel.status;
+                        let iconUrl = json.streams[0].channel.logo;
+                        let imageUrl = json.streams[0].preview.large;
+                        let game = json.streams[0].channel.game;
+
+                        if (stream_type === "live") {
+                            showNotification(message, title, iconUrl, imageUrl, game);
+                        }
                     }
                 }).catch(error => showNotification(error.toString()));
             });
@@ -78,16 +90,23 @@
 
     };
 
-    const showNotification = message => {
+    const showNotification = (message, title, iconUrl, imageUrl, game) => {
         let d = new Date();
 
         let notificationOptions = {
-            type: Peep.NOTIFICATIONS.TYPE.Basic,
-            iconUrl: chrome.extension.getURL("/assets/images/Glitch_Purple_RGB.svg"),
-            title: Peep.NOTIFICATIONS.Title,
+            type: (imageUrl === null) ? Peep.NOTIFICATIONS.TYPE.Basic : Peep.NOTIFICATIONS.TYPE.Image,
+            iconUrl: iconUrl || chrome.extension.getURL("/assets/images/Glitch_Purple_RGB.svg"),
+            title: title || Peep.NOTIFICATIONS.Title,
             message: message,
-            contextMessage: d.toLocaleString(),
+            contextMessage: game || d.toLocaleString(),
             eventTime: d.getTime(),
+            buttons: [
+                {
+                    "title": "Watch",
+                    "iconUrl": chrome.extension.getURL("/assets/images/Glitch_Purple_RGB.svg")
+                }
+            ],
+            imageUrl: imageUrl,
             requireInteraction: Peep.NOTIFICATIONS.RequireInteraction
         };
 
