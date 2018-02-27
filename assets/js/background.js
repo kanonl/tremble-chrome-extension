@@ -32,6 +32,14 @@
         }
     });
 
+    chrome.notifications.onButtonClicked.addListener((notificationId, buttonIndex) => {
+        if (buttonIndex === 0) {
+            chrome.notifications.clear(notificationId, wasCleared => {
+                // TODO
+            });
+        }
+    });
+
     const setAlarm = (name, when, periodInMinutes) => {
         chrome.alarms.clear(name, wasCleared => {
             chrome.alarms.create(name, {
