@@ -4,18 +4,18 @@
     "version": "0.0.100",
     "description": "Kibo is a leading omnichannel commerce platform for retailers and branded manufacturers.",
     "icons": {
-        "16": "assets/images/Glitch_Purple_RGB.svg",
-        "32": "assets/images/Glitch_Purple_RGB.svg",
-        "48": "assets/images/Glitch_Purple_RGB.svg",
-        "96": "assets/images/Glitch_Purple_RGB.svg",
-        "128": "assets/images/Glitch_Purple_RGB.svg"
+        "16": "assets/images/peep-16.png",
+        "32": "assets/images/peep-32.png",
+        "48": "assets/images/peep-48.png",
+        "96": "assets/images/peep-96.png",
+        "128": "assets/images/peep-128.png"
     },
     "author": "Kanon Lo",
     "browser_action": {
         "default_icon": {
-            "16": "assets/images/Glitch_Purple_RGB.svg",
-            "24": "assets/images/Glitch_Purple_RGB.svg",
-            "32": "assets/images/Glitch_Purple_RGB.svg"
+            "16": "assets/images/peep-16.png",
+            "24": "assets/images/peep-24.png",
+            "32": "assets/images/peep-32.png"
         },
         "default_title": "Peep",
         "default_popup": "assets/views/popup.html"
