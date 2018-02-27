@@ -27,6 +27,7 @@
     "permissions": [
         "alarms",
         "notifications",
-        "https://api.twitch.tv/"
+        "https://api.twitch.tv/",
+        "https://static-cdn.jtvnw.net/"
     ]
 }
