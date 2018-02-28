@@ -106,6 +106,9 @@
         }).catch(error => createNotification(error.toString()));
 
         setTimeout(function () {
+
+            setBadge(streamList.length);
+
             chrome.storage.sync.get({
                 "streamList": []
             }, items => {
@@ -129,6 +132,17 @@
             });
         }, 2000);
 
+    };
+
+    const setBadge = streamCount => {
+        if (streamCount > 0) {
+            chrome.browserAction.setBadgeText({
+                "text": streamCount.toString()
+            });
+            chrome.browserAction.setBadgeBackgroundColor({
+                "color": "#9B66FF"
+            });
+        }
     };
 
     const createStreamNotification = stream => {
