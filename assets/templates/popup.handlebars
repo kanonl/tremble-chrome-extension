@@ -1,15 +1,16 @@
-<table class="table table-bordered table-sm">
-    <caption>{{ title }}</caption>
-    <thead class="thead-dark">
+<table class="table table-sm table-striped">
+    <tbody>
+        {{#each streamList}}
         <tr>
-            <th>Left</th>
-            <th>Middle</th>
-            <th>Right</th>
+            <td class="align-top">
+                <a href="{{ url }}"><img class="logo img-thumbnail" src="{{ logo }}" alt="{{ name }}" data-url="{{ url }}" width="128"></a></td>
+            <td>
+                <div class="display_name">{{ display_name }}</div>
+                <div class="game">{{ game }}</div>
+                <div class="status">{{ status }}</div>
+            </td>
+            <td hidden>{{ viewers }}</td>
         </tr>
-    </thead>
-    <tr>
-        <td>Left</td>
-        <td>Middle</td>
-        <td>Right</td>
-    </tr>
+        {{/each}}
+    </tbody>
 </table>
