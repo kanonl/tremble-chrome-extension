@@ -98,7 +98,6 @@
                                 "preview": stream.preview.large,
                                 "url": stream.channel.url
                             });
-                            //createStreamNotification(json.streams[0]);
                         }
                     }
                 }).catch(error => createNotification(error.toString()));
