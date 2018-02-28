@@ -35,4 +35,5 @@
             alert.setAttribute("hidden", null);
         }, 2000);
     };
+
 })();
