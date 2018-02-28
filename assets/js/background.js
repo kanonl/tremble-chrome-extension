@@ -59,7 +59,8 @@
         const url = new URL(Peep.TWITCH.Url);
         url.pathname = Peep.TWITCH.Method;
         url.search = new URLSearchParams({
-            "client_id": Peep.TWITCH.ClientId
+            "client_id": Peep.TWITCH.ClientId,
+            "limit": 50
         });
 
         let streamList = [];
