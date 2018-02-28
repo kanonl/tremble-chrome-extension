@@ -4,7 +4,7 @@
         "ALARMS": {
             "Name": "peep",
             "When": Date.now() + 5000,
-            "PeriodInMinutes": 15
+            "PeriodInMinutes": 10
         },
         "NOTIFICATIONS": {
             "TYPE": {
@@ -135,14 +135,12 @@
     };
 
     const setBadge = streamCount => {
-        if (streamCount > 0) {
-            chrome.browserAction.setBadgeText({
-                "text": streamCount.toString()
-            });
-            chrome.browserAction.setBadgeBackgroundColor({
-                "color": "#9B66FF"
-            });
-        }
+        chrome.browserAction.setBadgeText({
+            "text": (streamCount > 0) ? streamCount.toString() : ""
+        });
+        chrome.browserAction.setBadgeBackgroundColor({
+            "color": "#9B66FF"
+        });
     };
 
     const createStreamNotification = stream => {
