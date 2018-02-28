@@ -3,7 +3,7 @@
     const Peep = {
         "ALARMS": {
             "Name": "peep",
-            "When": Date.now() + 5000,
+            "When": Date.now() + 2500,
             "PeriodInMinutes": 10
         },
         "NOTIFICATIONS": {
