@@ -19,8 +19,20 @@
                     chrome.browserAction.setTitle({
                         "title": username
                     });
+                    showAlert("Username Saved");
                 });
             });
         }
     });
+
+    const showAlert = message => {
+        const alert = document.querySelector(".alert");
+
+        alert.innerHTML = message;
+        alert.removeAttribute("hidden");
+
+        setTimeout(function () {
+            alert.setAttribute("hidden", null);
+        }, 2000);
+    };
 })();

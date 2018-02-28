@@ -11,3 +11,8 @@ legend {
     color: white;
     background-color: #6441A4;
 }
+
+.alert{
+    text-align: center;
+    margin-top: 1rem;
+}
