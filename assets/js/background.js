@@ -61,6 +61,10 @@
 
     const fetchChannels = username => {
 
+        chrome.browserAction.setTitle({
+            "title": username
+        });
+
         const url = new URL(Peep.TWITCH.Url);
         url.pathname = `/kraken/users/${username}/follows/channels`;
         url.search = new URLSearchParams({

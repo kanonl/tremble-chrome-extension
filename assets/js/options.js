@@ -1,6 +1,6 @@
 (function () {
 
-    chrome.storage.sync.get("username", items=>{
+    chrome.storage.sync.get("username", items => {
         if (items.username) document.querySelector("#user").value = items.username;
     });
 
@@ -16,6 +16,9 @@
                 }, () => {
                     const b = chrome.extension.getBackgroundPage();
                     b.setAlarm(b.Peep.ALARMS.Name, b.Peep.ALARMS.When, b.Peep.ALARMS.PeriodInMinutes);
+                    chrome.browserAction.setTitle({
+                        "title": username
+                    });
                 });
             });
         }
