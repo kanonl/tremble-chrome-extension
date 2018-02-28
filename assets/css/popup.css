@@ -20,11 +20,11 @@ div#Peep {
     color: #6441A4;
     font-size: 12px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    min-width: 250px;
+    width: 320px;
+    min-width: 256px;
 }
 
 .display_name {
-/*    font-weight: 700;*/
     font-size: 24px;
     font-family: "Dimitri";
     font-family: "Dimitri Swank";
@@ -38,9 +38,12 @@ div#Peep {
 .status {
     font-size: 10px;
     color: #ccc;
-    min-width: 150px;
 }
 
 .table td {
     border: 0;
+}
+
+.table {
+    margin-bottom: 0;
 }
