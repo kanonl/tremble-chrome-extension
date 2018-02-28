@@ -4,7 +4,7 @@
         "ALARMS": {
             "Name": "peep",
             "When": Date.now() + 5000,
-            "PeriodInMinutes": 5
+            "PeriodInMinutes": 15
         },
         "NOTIFICATIONS": {
             "TYPE": {
@@ -18,7 +18,7 @@
         "TWITCH": {
             "Url": "https://api.twitch.tv",
             "Method": "/kraken/users/rukipooki/follows/channels",
-            "CliendId": "haeyonp05j4wiphav3eppivtdsvlyoq"
+            "ClientId": "haeyonp05j4wiphav3eppivtdsvlyoq"
         }
     };
 
@@ -59,7 +59,7 @@
         const url = new URL(Peep.TWITCH.Url);
         url.pathname = Peep.TWITCH.Method;
         url.search = new URLSearchParams({
-            "client_id": Peep.TWITCH.CliendId
+            "client_id": Peep.TWITCH.ClientId
         });
 
         let streamList = [];
@@ -75,7 +75,7 @@
                 url.pathname = "/kraken/streams";
                 url.search = new URLSearchParams({
                     "channel": follow.channel.name,
-                    "client_id": Peep.TWITCH.CliendId
+                    "client_id": Peep.TWITCH.ClientId
                 });
 
                 fetch(url.toString()).then(response => {
