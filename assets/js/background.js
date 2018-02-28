@@ -4,7 +4,7 @@
         "ALARMS": {
             "Name": "peep",
             "When": Date.now() + 5000,
-            "PeriodInMinutes": 15
+            "PeriodInMinutes": 5
         },
         "NOTIFICATIONS": {
             "TYPE": {
@@ -35,7 +35,12 @@
     chrome.notifications.onButtonClicked.addListener((notificationId, buttonIndex) => {
         if (buttonIndex === 0) {
             chrome.notifications.clear(notificationId, wasCleared => {
-                // TODO
+                let createProperties = {
+                    "url": notificationId
+                };
+                chrome.tabs.create(createProperties, tab => {
+                    console.log(tab);
+                });
             });
         }
     });
@@ -56,6 +61,8 @@
         url.search = new URLSearchParams({
             "client_id": Peep.TWITCH.CliendId
         });
+
+        let streamList = [];
 
         fetch(url.toString()).then(response => {
             if (response.ok) {
@@ -78,54 +85,104 @@
                     throw new Error(response.statusText);
                 }).then(json => {
                     if (json.streams.length > 0) {
-                        console.log(json);
-
-                        let stream_type = json.streams[0].stream_type;
-                        let title = `${json.streams[0].channel.display_name}`;
-                        let message = json.streams[0].channel.status;
-                        let iconUrl = json.streams[0].channel.logo;
-                        let imageUrl = json.streams[0].preview.large;
-                        let game = json.streams[0].channel.game;
-
+                        let stream = json.streams[0];
+                        let stream_type = stream.stream_type;
                         if (stream_type === "live") {
-                            showNotification(message, title, iconUrl, imageUrl, game);
+                            streamList.push({
+                                "name": stream.channel.name,
+                                "logo": stream.channel.logo,
+                                "display_name": stream.channel.display_name,
+                                "status": stream.channel.status,
+                                "game": stream.channel.game,
+                                "viewers": stream.viewers,
+                                "preview": stream.preview.large,
+                                "url": stream.channel.url
+                            });
+                            //createStreamNotification(json.streams[0]);
                         }
                     }
-                }).catch(error => showNotification(error.toString()));
+                }).catch(error => createNotification(error.toString()));
             });
 
-        }).catch(error => console.error(error.toString()));
+        }).catch(error => createNotification(error.toString()));
+
+        setTimeout(function () {
+            chrome.storage.sync.get({
+                "streamList": []
+            }, items => {
+
+                streamList.forEach(newstream => {
+                    let notify = true;
+                    items.streamList.forEach(stream => {
+                        if (stream.name === newstream.name) {
+                            notify = false;
+                        }
+                    });
+                    if (notify) {
+                        createStreamNotification(newstream);
+                    }
+                });
+
+                chrome.storage.sync.set({
+                    "streamList": streamList
+                });
+
+            });
+        }, 2000);
 
     };
 
-    const showNotification = (message, title, iconUrl, imageUrl, game) => {
+    const createStreamNotification = stream => {
         let d = new Date();
 
         let notificationOptions = {
-            type: (imageUrl === null) ? Peep.NOTIFICATIONS.TYPE.Basic : Peep.NOTIFICATIONS.TYPE.Image,
-            iconUrl: iconUrl || chrome.extension.getURL("/assets/images/Glitch_Purple_RGB.svg"),
-            title: title || Peep.NOTIFICATIONS.Title,
-            message: message,
-            contextMessage: game || d.toLocaleString(),
+            type: Peep.NOTIFICATIONS.TYPE.Image,
+            iconUrl: stream.logo,
+            title: stream.display_name,
+            message: stream.status,
+            contextMessage: stream.game,
             eventTime: d.getTime(),
             buttons: [
                 {
-                    "title": "Watch",
+                    "title": `${stream.viewers} viewers`,
                     "iconUrl": chrome.extension.getURL("/assets/images/Glitch_Purple_RGB.svg")
                 }
             ],
-            imageUrl: imageUrl,
+            imageUrl: stream.preview,
             requireInteraction: Peep.NOTIFICATIONS.RequireInteraction
         };
 
-        chrome.notifications.create(notificationOptions, notificationId => {
+        showNotification(notificationOptions, stream.url);
+
+        return;
+    };
+
+    const createNotification = message => {
+        let d = new Date();
+
+        let notificationOptions = {
+            type: Peep.NOTIFICATIONS.TYPE.Basic,
+            iconUrl: chrome.extension.getURL("/assets/images/Glitch_Purple_RGB.svg"),
+            title: Peep.NOTIFICATIONS.Title,
+            message: message,
+            contextMessage: d.toLocaleString(),
+            eventTime: d.getTime(),
+            requireInteraction: Peep.NOTIFICATIONS.RequireInteraction
+        };
+
+        showNotification(notificationOptions);
+
+        return;
+    };
+
+    const showNotification = (notificationOptions, url) => {
+        if (!url) url = null;
+        chrome.notifications.create(url, notificationOptions, notificationId => {
             if (chrome.runtime.lastError) {
                 console.error(chrome.runtime.lastError.message);
             }
             console.log(`[notificationId] ${notificationId}`);
         });
-
-        return;
     };
 
 })();

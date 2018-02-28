@@ -1,5 +1,6 @@
 (function () {
     document.querySelector("#Peep").innerHTML = Handlebars.templates.popup({
-        "title": "Merry Christmas!"
+        "title": "Hello, World!"
     });
+    chrome.storage.sync.clear();
 })();
