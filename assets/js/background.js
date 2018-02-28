@@ -135,6 +135,15 @@
     };
 
     const setBadge = streamCount => {
+        if (streamCount > 0) {
+            chrome.browserAction.enable();
+        } else {
+            chrome.browserAction.disable();
+            chrome.browserAction.setTitle({
+                "title": `${Peep.NOTIFICATIONS.Title} - No active streams`
+            });
+        }
+
         chrome.browserAction.setBadgeText({
             "text": (streamCount > 0) ? streamCount.toString() : ""
         });
