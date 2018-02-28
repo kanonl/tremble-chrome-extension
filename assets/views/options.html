@@ -5,10 +5,23 @@
     <title>Options</title>
     <meta charset="utf-8">
     <link href="/libs/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/common.css" rel="stylesheet">
     <link href="/assets/css/options.css" rel="stylesheet">
 </head>
 
 <body>
+    <div class="container">
+        <form id="formOptions">
+            <fieldset>
+                <legend>Options</legend>
+                <div class="form-group">
+                    <label for="user">Twitch Username</label>
+                    <input type="text" id="user" class="form-control rounded-0" required autofocus autocomplete="off">
+                </div>
+                <button type="submit" class="btn btn-primary rounded-0">Save</button>
+            </fieldset>
+        </form>
+    </div>
     <script src="/assets/js/options.js"></script>
 </body>
 

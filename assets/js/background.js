@@ -17,7 +17,6 @@
         },
         "TWITCH": {
             "Url": "https://api.twitch.tv",
-            "Method": "/kraken/users/rukipooki/follows/channels",
             "ClientId": "haeyonp05j4wiphav3eppivtdsvlyoq"
         }
     };
@@ -28,7 +27,13 @@
 
     chrome.alarms.onAlarm.addListener(alarm => {
         if (alarm.name === Peep.ALARMS.Name) {
-            fetchChannels();
+            chrome.storage.sync.get("username", items => {
+                if (items.username) {
+                    fetchChannels(items.username);
+                } else {
+                    chrome.runtime.openOptionsPage(() => {});
+                }
+            });
         }
     });
 
@@ -54,10 +59,10 @@
         });
     };
 
-    const fetchChannels = () => {
+    const fetchChannels = username => {
 
         const url = new URL(Peep.TWITCH.Url);
-        url.pathname = Peep.TWITCH.Method;
+        url.pathname = `/kraken/users/${username}/follows/channels`;
         url.search = new URLSearchParams({
             "client_id": Peep.TWITCH.ClientId,
             "limit": 50
@@ -205,5 +210,8 @@
             console.log(`[notificationId] ${notificationId}`);
         });
     };
+
+    window.Peep = Peep;
+    window.setAlarm = setAlarm;
 
 })();

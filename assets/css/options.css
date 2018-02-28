@@ -1,0 +1,13 @@
+body {
+}
+
+legend {
+    color: #6441A4;
+    font-family: "Dimitri Swank";
+    font-size: 48px;
+}
+
+.btn {
+    color: white;
+    background-color: #6441A4;
+}
