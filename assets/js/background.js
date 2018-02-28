@@ -140,7 +140,7 @@
         } else {
             chrome.browserAction.disable();
             chrome.browserAction.setTitle({
-                "title": `${Peep.NOTIFICATIONS.Title} - No active streams`
+                "title": `${Peep.NOTIFICATIONS.Title} - No active stream`
             });
         }
 
