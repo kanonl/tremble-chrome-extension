@@ -14,8 +14,10 @@
                 chrome.storage.sync.set({
                     "username": username
                 }, () => {
-                    const b = chrome.extension.getBackgroundPage();
-                    b.setAlarm(b.Peep.ALARMS.Name, b.Peep.ALARMS.When, b.Peep.ALARMS.PeriodInMinutes);
+                    chrome.runtime.sendMessage({
+                        "action": "resetAlarm"
+                    });
+
                     chrome.browserAction.setTitle({
                         "title": username
                     });
@@ -23,6 +25,19 @@
                 });
             });
         }
+    });
+
+    document.querySelector(".btn-reset").addEventListener("click", event => {
+        chrome.storage.sync.clear(() => {
+            chrome.browserAction.disable();
+            chrome.browserAction.setTitle({
+                "title": ""
+            });
+            chrome.browserAction.setBadgeText({
+                "text": ""
+            });
+            showAlert("Data Reset");
+        });
     });
 
     const showAlert = message => {

@@ -25,6 +25,15 @@
 
     chrome.runtime.onStartup.addListener(event => setAlarm(Peep.ALARMS.Name, Peep.ALARMS.When, Peep.ALARMS.PeriodInMinutes));
 
+    chrome.browserAction.onClicked.addListener(tab => {});
+
+    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+        if (message.action === "resetAlarm") {
+            console.log("Resetting alarm");
+            setAlarm(Peep.ALARMS.Name, Peep.ALARMS.When, Peep.ALARMS.PeriodInMinutes);
+        }
+    });
+
     chrome.alarms.onAlarm.addListener(alarm => {
         if (alarm.name === Peep.ALARMS.Name) {
             chrome.storage.sync.get("username", items => {
@@ -214,8 +223,5 @@
             console.log(`[notificationId] ${notificationId}`);
         });
     };
-
-    window.Peep = Peep;
-    window.setAlarm = setAlarm;
 
 })();
