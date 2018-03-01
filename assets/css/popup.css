@@ -6,6 +6,11 @@ div#Peep {
     min-width: 256px;
 }
 
+.twitch {
+    color: #6441A4;
+    font-weight: bold;
+}
+
 .display_name {
     font-size: 24px;
     font-family: "Dimitri";
