@@ -1,16 +1,15 @@
 (function () {
 
     document.querySelector("#options").addEventListener("click", event => {
-
         event.preventDefault();
-
         chrome.runtime.openOptionsPage(() => {});
-
     });
 
-    chrome.storage.sync.get("streamList", items => {
+    chrome.storage.sync.get(["streamList", "username"], items => {
 
-        if (items.streamList.length > 0) {
+        if (!items.username) chrome.runtime.openOptionsPage(() => {});
+
+        if (items.streamList && items.streamList.length > 0) {
             document.querySelector("#Peep").innerHTML =
                 Handlebars.templates.popup(items);
 
