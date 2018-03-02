@@ -122,7 +122,7 @@
                 }).catch(error => createNotification(error.toString()));
             });
 
-        }).catch(error => createNotification(error.toString()));
+        }).catch(error => console.log(error.toString()));
 
         setTimeout(function () {
 
