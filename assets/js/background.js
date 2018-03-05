@@ -1,4 +1,7 @@
 (function () {
+    chrome.browserAction.setIcon({
+        path: chrome.runtime.getURL("assets/images/Glitch_Purple_RGB.svg")
+    });
 
     const Peep = {
         "ALARMS": {
