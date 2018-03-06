@@ -2,7 +2,7 @@ div#Peep {
     color: #6441A4;
     font-size: 12px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    width: 320px;
+    width: 350px;
     min-width: 256px;
 }
 
@@ -33,4 +33,34 @@ div#Peep {
 
 .table {
     margin-bottom: 0;
+}
+
+.align-top {
+    width: 128px;
+}
+
+hr {
+    margin: 0.4rem 0;
+}
+
+.viewers ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.viewers li {
+    color: #ccc;
+    font-size: 10px;
+    display: inline;
+    padding: 0 0.2rem;
+    border-right: 1px solid #ccc;
+}
+
+.viewers li:first-child {
+    padding-left: 0;
+}
+
+.viewers li:last-child {
+    border-right: 0;
 }

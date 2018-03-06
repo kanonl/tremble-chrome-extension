@@ -1,7 +1,6 @@
 (function () {
-    chrome.browserAction.setIcon({
-        path: chrome.runtime.getURL("assets/images/Glitch_Purple_RGB.svg")
-    });
+
+    "use strict";
 
     const Peep = {
         "ALARMS": {
@@ -23,6 +22,10 @@
             "ClientId": "haeyonp05j4wiphav3eppivtdsvlyoq"
         }
     };
+
+    chrome.browserAction.setIcon({
+        path: chrome.runtime.getURL("assets/images/Glitch_Purple_RGB.svg")
+    });
 
     chrome.runtime.onInstalled.addListener(event => setAlarm(Peep.ALARMS.Name, Peep.ALARMS.When, Peep.ALARMS.PeriodInMinutes));
 
@@ -114,6 +117,7 @@
                                 "name": stream.channel.name,
                                 "logo": stream.channel.logo,
                                 "display_name": stream.channel.display_name,
+                                "followers": stream.channel.followers,
                                 "status": stream.channel.status,
                                 "game": stream.channel.game,
                                 "viewers": stream.viewers,

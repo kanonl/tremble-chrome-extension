@@ -1,5 +1,7 @@
 (function () {
 
+    "use strict";
+
     chrome.storage.sync.get("username", items => {
         if (items.username) document.querySelector("#user").value = items.username;
     });

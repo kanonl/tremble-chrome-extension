@@ -3,13 +3,18 @@
         {{#each streamList}}
         <tr>
             <td class="align-top">
-                <a href="{{ url }}"><img class="logo img-thumbnail" src="{{ logo }}" alt="{{ name }}" data-url="{{ url }}" width="128"></a></td>
+                <a href="{{ url }}"><img class="logo img-thumbnail" src="{{ logo }}" alt="{{ name }}" data-url="{{ url }}"></a></td>
             <td>
                 <div class="display_name">{{ display_name }}</div>
                 <div class="game">{{ game }}</div>
                 <div class="status">{{ status }}</div>
+                <hr>
+                <div class="viewers">
+                    <ul>
+                        <li>{{ viewers }} viewers</li><li>{{ followers }} followers</li>
+                    </ul>
+                </div>
             </td>
-            <td hidden>{{ viewers }}</td>
         </tr>
         {{/each}}
     </tbody>
