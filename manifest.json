@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Peep",
-    "version": "0.0.106",
+    "version": "0.0.107",
     "description": "Peep lets you track the Twitch channels that you follow and notifies you when they go live.",
     "icons": {
         "16": "assets/images/twitch-16.png",
