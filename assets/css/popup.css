@@ -1,6 +1,6 @@
 div#Peep {
-    color: #6441A4;
-    font-size: 12px;
+    color: #999;
+    font-size: 10px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     width: 350px;
     min-width: 256px;
@@ -12,20 +12,17 @@ div#Peep {
 }
 
 .display_name {
+    color: #6441A4;
     font-size: 24px;
     font-family: "Dimitri";
-    font-family: "Dimitri Swank";
 }
 
 .game {
+    color: #6441A4;
     text-transform: uppercase;
-    font-size: 10px;
 }
 
-.status {
-    font-size: 10px;
-    color: #ccc;
-}
+.status {}
 
 .table td {
     border: 0;
@@ -50,8 +47,6 @@ hr {
 }
 
 .viewers li {
-    color: #ccc;
-    font-size: 10px;
     display: inline;
     padding: 0 0.2rem;
     border-right: 1px solid #ccc;
