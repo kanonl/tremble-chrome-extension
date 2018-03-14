@@ -22,7 +22,9 @@
     },
     "options_page": "assets/views/options.html",
     "background": {
-        "scripts": ["assets/js/background.js"],
+        "scripts": [
+            "assets/js/background.js"
+        ],
         "persistent": false
     },
     "permissions": [
