@@ -3,15 +3,15 @@
         {{#each streamList}}
         <tr>
             <td class="align-top">
-                <a href="{{ url }}"><img class="logo img-thumbnail" src="{{ logo }}" alt="{{ name }}" data-url="{{ url }}"></a></td>
+                <a href="https://www.twitch.tv/{{ user.display_name }}"><img class="logo img-thumbnail" src="{{ user.profile_image_url }}" alt="{{ user.display_name }}" data-url="https://www.twitch.tv/{{ user.display_name }}"></a></td>
             <td>
-                <div class="display_name">{{ display_name }}</div>
-                <div class="game">{{ game }}</div>
-                <div class="status">{{ status }}</div>
+                <div class="display_name">{{ user.display_name }}</div>
+                <div class="game">{{ game.name }}</div>
+                <div class="status">{{ title }}</div>
                 <hr>
                 <div class="viewers">
                     <ul>
-                        <li>{{ viewers }} viewers</li><li>{{ followers }} followers</li>
+                        <li>{{ viewer_count }} viewers</li><li>{{ started_at }}</li>
                     </ul>
                 </div>
             </td>

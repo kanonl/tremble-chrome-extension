@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
-    "name": "Peep",
-    "version": "0.0.107",
-    "description": "Peep lets you track the Twitch channels that you follow and notifies you when they go live.",
+    "name": "tremble",
+    "version": "0.0.108",
+    "description": "tremble lets you track the Twitch channels that you follow and notifies you when they go live.",
     "icons": {
         "16": "assets/images/twitch-16.png",
         "32": "assets/images/twitch-32.png",
@@ -17,7 +17,7 @@
             "24": "assets/images/twitch-24.png",
             "32": "assets/images/twitch-32.png"
         },
-        "default_title": "Peep",
+        "default_title": "tremble",
         "default_popup": "assets/views/popup.html"
     },
     "options_page": "assets/views/options.html",
