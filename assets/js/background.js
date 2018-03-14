@@ -128,31 +128,35 @@
 
                         twitch.GetStreams(stream_id).then(streams => {
 
-                            let game_id = [],
-                                user_id = [];
+                            setBadge(streams.data.length);
 
-                            streams.data.forEach(stream => {
-                                game_id.push(stream.game_id);
-                                user_id.push(stream.user_id);
-                            });
+                            if (streams.data.length > 0) {
+                                let game_id = [],
+                                    user_id = [];
 
-                            Promise.all([
-                                twitch.GetUsers(user_id),
-                                twitch.GetGames(game_id)
-                            ]).then(done => {
+                                streams.data.forEach(stream => {
+                                    game_id.push(stream.game_id);
+                                    user_id.push(stream.user_id);
+                                });
 
-                                let user, game;
+                                Promise.all([
+                                    twitch.GetUsers(user_id),
+                                    twitch.GetGames(game_id)
+                                ]).then(done => {
 
-                                if (done[0].data[0].broadcaster_type) {
-                                    user = done[0].data;
-                                    game = done[1].data;
-                                } else {
-                                    user = done[1].data;
-                                    game = done[0].data;
-                                }
+                                    let user, game;
 
-                                compile(streams.data, user, game);
-                            });
+                                    if (done[0].data[0].broadcaster_type) {
+                                        user = done[0].data;
+                                        game = done[1].data;
+                                    } else {
+                                        user = done[1].data;
+                                        game = done[0].data;
+                                    }
+
+                                    compile(streams.data, user, game);
+                                });
+                            }
 
                         });
                     });
@@ -170,9 +174,7 @@
                 let createProperties = {
                     "url": notificationId
                 };
-                chrome.tabs.create(createProperties, tab => {
-                    console.log(tab);
-                });
+                chrome.tabs.create(createProperties, tab => { });
             });
         }
     });
@@ -209,8 +211,6 @@
             streamList.push(streamData);
 
         });
-
-        setBadge(streamList.length);
 
         chrome.storage.sync.get({ "streamList": [] }, items => {
             streamList.forEach(newstream => {
