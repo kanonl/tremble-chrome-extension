@@ -1,66 +1,72 @@
+import { tremble } from "./modules/config.js";
+import { setAlarm, parseHash } from "./modules/utils.js";
+
 (function () {
 
     "use strict";
 
-    chrome.storage.sync.get(null, items => {
-        if (items.user) document.querySelector("#user").value = items.user.login;
-    });
-
-    document.querySelector("#formOptions").addEventListener("submit", event => {
-        event.preventDefault();
-
-        const username = document.querySelector("#user").value.trim();
-
-        if (username.length > 0) {
-            GetUserID(username);
+    chrome.storage.sync.get("user", items => {
+        if (items.user) {
+            document.querySelector("#user").innerHTML = Handlebars.templates.options(items.user);
+            BindEventListener();
+            document.querySelector("button.login").classList.toggle("d-none");
+        } else {
+            document.querySelector("#user").classList.toggle("d-none");
         }
     });
 
-    document.querySelector(".btn-reset").addEventListener("click", event => {
-        chrome.storage.sync.clear(() => {
-            chrome.browserAction.disable();
-            chrome.browserAction.setTitle({ "title": "" });
-            chrome.browserAction.setBadgeText({ "text": "" });
-            showAlert("Username reset", "success");
-        });
-    });
+    document.querySelector("button.login").addEventListener("click", event => authorization());
 
-    const GetUserID = async (login) => {
-        let response = await fetch(`https://api.twitch.tv/helix/users?login=${login}`, {
-            headers: { "Client-ID": "haeyonp05j4wiphav3eppivtdsvlyoq" }
-        });
-        let json = await response.json();
-
-        if (json.data.length > 0) {
+    const BindEventListener = () => {
+        document.querySelector("button.logout").addEventListener("click", event => {
             chrome.storage.sync.clear(() => {
-                chrome.storage.sync.set({
-                    "user": {
-                        "id": json.data[0].id,
-                        "login": json.data[0].login
+                document.querySelector("button.login").classList.toggle("d-none");
+                document.querySelector("#user").classList.toggle("d-none");
+            });
+        });
+    }
+
+    const authorization = () => {
+        let url = new URL("https://id.twitch.tv");
+        url.pathname = "/oauth2/authorize"
+        url.search = new URLSearchParams({
+            client_id: "qkawy9529hy6n14pad3tvve4i8q8y4",
+            redirect_uri: chrome.identity.getRedirectURL(),
+            response_type: "token",
+            scope: "user:read:email"
+        });
+
+        chrome.identity.launchWebAuthFlow({
+            url: url.toString(),
+            interactive: true
+        }, responseUrl => {
+            if (chrome.runtime.lastError) return;
+
+            let url = new URL(responseUrl);
+            let hash = url.hash.substring(1);
+            let data = parseHash(hash);
+
+            chrome.storage.sync.set({ authorization: data }, async () => {
+                let fetchOptions = {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${data.access_token}`,
+                        "Client-ID": "qkawy9529hy6n14pad3tvve4i8q8y4"
                     }
-                }, () => {
-                    chrome.runtime.sendMessage({ "action": "resetAlarm" });
+                };
 
-                    chrome.browserAction.setTitle({ "title": json.data[0].login });
-
-                    showAlert("Username saved", "success");
+                let responseUsers = await fetch("https://api.twitch.tv/helix/users", fetchOptions).then(response => response.json());
+                let user = responseUsers.data[0];
+                
+                chrome.storage.sync.set({ user: user }, () => {
+                    document.querySelector("#user").innerHTML = Handlebars.templates.options(user);
+                    BindEventListener();
+                    document.querySelector("#user").classList.toggle("d-none");
+                    document.querySelector("button.login").classList.toggle("d-none");
+                    setAlarm(tremble.ALARMS.Name, tremble.ALARMS.When, tremble.ALARMS.PeriodInMinutes)
                 });
             });
-        } else {
-            showAlert(`Username <b>${login}</b> not found`, "danger");
-        }
-    };
-
-    const showAlert = (message, alertType) => {
-        const alert = document.querySelector(".alert");
-        alert.className = `alert alert-${alertType}`;
-
-        alert.innerHTML = message;
-        alert.removeAttribute("hidden");
-
-        setTimeout(function () {
-            alert.setAttribute("hidden", null);
-        }, 4000);
-    };
+        });
+    }
 
 })();

@@ -1,5 +1,4 @@
-body {
-}
+body {}
 
 legend {
     color: #6441A4;
@@ -12,7 +11,7 @@ legend {
     background-color: #6441A4;
 }
 
-.alert{
+.alert {
     text-align: center;
     margin-top: 1rem;
 }

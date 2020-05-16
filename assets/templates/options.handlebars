@@ -1,0 +1,13 @@
+<div class="card">
+    <img class="card-img-top pull-right" src="{{ profile_image_url }}">
+    <div class="card-body">
+        <h5 class="card-title text-uppercase">{{ display_name }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted"><small>{{ email }}</small></h6>
+        {{#if description}}
+        <p class="card-text">{{ description }}</p>
+        {{/if}}
+    </div>
+    <div class="card-body">
+        <button type="button" class="btn btn-primary btn-lg rounded-0 logout">LOGOUT</button>
+    </div>
+</div>

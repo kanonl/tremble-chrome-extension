@@ -14,17 +14,20 @@
         <form id="formOptions">
             <fieldset>
                 <legend>Options</legend>
-                <div class="form-group">
-                    <label for="user">Twitch Username</label>
-                    <input type="text" id="user" class="form-control rounded-0" required autofocus autocomplete="off">
-                </div>
-                <button type="submit" class="btn btn-primary rounded-0">Save</button>
-                <button type="reset" class="btn btn-default btn-reset rounded-0">Reset</button>
+                <button type="button" class="btn btn-primary btn-lg rounded-0 login">LOGIN</button>
+                <div id="user"></div>
             </fieldset>
             <div class="alert alert-success" hidden></div>
         </form>
     </div>
-    <script src="/assets/js/options.js"></script>
+    <script src="/libs/js/handlebars.runtime.min.js"></script>
+    <script src="/assets/js/handlebars.templates.js"></script>
+    <script type="module" src="/assets/js/options.js"></script>
+    <style>
+        .card {
+            width: 25%;
+        }
+    </style>
 </body>
 
 </html>

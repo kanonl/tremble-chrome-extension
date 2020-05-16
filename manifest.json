@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "tremble",
-    "version": "0.0.109",
+    "version": "0.0.110",
     "description": "tremble lets you track the Twitch channels that you follow and notifies you when they go live.",
     "icons": {
         "16": "assets/images/twitch-16.png",
@@ -22,13 +22,12 @@
     },
     "options_page": "assets/views/options.html",
     "background": {
-        "scripts": [
-            "assets/js/background.js"
-        ],
+        "page": "assets/background.html",
         "persistent": false
     },
     "permissions": [
         "alarms",
+        "identity",
         "notifications",
         "storage",
         "https://api.twitch.tv/",
